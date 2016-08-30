@@ -19,8 +19,8 @@ ENV CONFIG "\
     --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
     --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
     --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-    --user=nginx \
-    --group=nginx \
+    --user=www-data \
+    --group=www-data \
     --with-http_ssl_module \
     --with-http_realip_module \
     --with-http_addition_module \
@@ -62,8 +62,9 @@ RUN apk add --update \
     vim
 
 RUN \
-    addgroup -S nginx \
-    && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
+    addgroup -S www-data \
+    && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G www-data www-data \
+    && chown -R www-data:www-data /var/run \
     && apk add --no-cache --virtual .build-deps \
         gcc \
         libc-dev \
@@ -159,6 +160,8 @@ RUN apk update && \
     
     # Set environments
     sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = www-data|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;listen.group\s*=\s*nobody|listen.group = www-data|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = ${PHP_LISTEN}|g" /etc/php5/php-fpm.conf && \
     sed -i "s|include|;include|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php5/php.ini && \
