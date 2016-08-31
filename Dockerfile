@@ -3,12 +3,7 @@ FROM nginx:stable-alpine
 MAINTAINER Vladimir Dmitrovskiy vladimir@tep.io
 
 ENV TIMEZONE                UTC
-ENV PHP_MEMORY_LIMIT        512M
-ENV PHP_MAX_UPLOAD          50M
-ENV PHP_MAX_FILE_UPLOAD     200
-ENV PHP_MAX_POST            100M
 ENV PHP_LISTEN              /var/run/php5-fpm.sock
-
 
 RUN \
     addgroup -S www-data && \
@@ -44,11 +39,8 @@ RUN \
     sed -i "s|;listen.group\s*=\s*nobody|listen.group = www-data|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = ${PHP_LISTEN}|g" /etc/php5/php-fpm.conf && \
     sed -i "s|include|;include|g" /etc/php5/php-fpm.conf && \
+
     sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php5/php.ini && \
-    sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php5/php.ini && \
-    sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" /etc/php5/php.ini && \
-    sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php5/php.ini && \
-    sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php5/php.ini && \
     sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php5/php.ini && \
 
     mkdir -p /var/www/html && \
