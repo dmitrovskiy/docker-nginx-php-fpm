@@ -17,9 +17,9 @@ RUN \
     # Installing php
     apk add --update tzdata && \
     cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo "${TIMEZONE}" > /etc/timezone
+    echo "${TIMEZONE}" > /etc/timezone && \
 
-RUN  apk add --update \
+    apk add --update \
          php5-json \
          php5-pdo \
          php5-zip \
@@ -35,11 +35,11 @@ RUN  apk add --update \
          php5-bcmath \
          php5-pcntl \
          php5-opcache \
-         php5-fpm
+         php5-fpm && \
 
     
     # Set environments
-RUN    sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = www-data|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;listen.group\s*=\s*nobody|listen.group = www-data|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = ${PHP_LISTEN}|g" /etc/php5/php-fpm.conf && \
