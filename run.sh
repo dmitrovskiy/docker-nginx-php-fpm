@@ -23,6 +23,10 @@ NGINX_FASTCGI_BUFFERS=${NGINX_FASTCGI_BUFFERS:-256 16k}
 NGINX_FASTCGI_BUSY_BUFFERS_SIZE=${NGINX_FASTCGI_BUSY_BUFFERS_SIZE:-256k}
 NGINX_FASTCGI_TEMP_FILE_WRITE_SIZE=${NGINX_FASTCGI_TEMP_FILE_WRITE_SIZE:-256k}
 
+#fpm config
+FPM_PROCESS_PRIORITY=${FPM_PROCESS_PRIORITY:--19}
+FPM_PROCESS_MAX=${FPM_PROCESS_MAX:-0}
+
 # php config
 PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-512M}
 PHP_MAX_UPLOAD=${PHP_MAX_UPLOAD:-50M}
@@ -55,6 +59,9 @@ sed -i "s|fastcgi_buffer_size.*;|fastcgi_buffer_size ${NGINX_FASTCGI_BUFFER_SIZE
 sed -i "s|fastcgi_buffers.*;|fastcgi_buffers ${NGINX_FASTCGI_BUFFERS};|i" /etc/nginx/conf.d/default.conf
 sed -i "s|fastcgi_busy_buffers_size.*;|fastcgi_busy_buffers_size ${NGINX_FASTCGI_BUSY_BUFFERS_SIZE};|i" /etc/nginx/conf.d/default.conf
 sed -i "s|fastcgi_temp_file_write_size.*;|fastcgi_temp_file_write_size ${NGINX_FASTCGI_TEMP_FILE_WRITE_SIZE};|i" /etc/nginx/conf.d/default.conf
+
+sed -i "s|;\sprocess\.priority\s=.*|process\.priority = ${FPM_PROCESS_PRIORITY}|i" /etc/php5/php-fpm.conf
+sed -i "s|;\sprocess\.max\s=.*|process\.max = ${FPM_PROCESS_MAX}|i" /etc/php5/php-fpm.conf
 
 sed -i "s|;*memory_limit\s*=\s*.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php5/php.ini
 sed -i "s|;*upload_max_filesize\s*=\s*.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" /etc/php5/php.ini
