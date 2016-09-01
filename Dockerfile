@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine
+FROM nginx:1.10.1-alpine
 
 MAINTAINER Vladimir Dmitrovskiy vladimir@tep.io
 
@@ -6,8 +6,8 @@ ENV TIMEZONE                UTC
 ENV PHP_LISTEN              /var/run/php5-fpm.sock
 
 RUN \
-    addgroup -S www-data && \
-    adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G www-data www-data && \
+    #addgroup -S www-data && \
+    #adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G www-data www-data && \
 
     # Installing php
     apk add --update tzdata && \
@@ -35,8 +35,8 @@ RUN \
     
     # Set environments
     sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = www-data|g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;listen.group\s*=\s*nobody|listen.group = www-data|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = root|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;listen.group\s*=\s*nobody|listen.group = root|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = ${PHP_LISTEN}|g" /etc/php5/php-fpm.conf && \
     sed -i "s|include|;include|g" /etc/php5/php-fpm.conf && \
 
