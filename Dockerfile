@@ -1,19 +1,13 @@
 FROM nginx:1.10.1-alpine
 
-MAINTAINER Vladimir Dmitrovskiy vladimir@tep.io
+MAINTAINER Vladimir Dmitrovskiy "vladimir@tep.io"
 
 ENV TIMEZONE                UTC
 ENV PHP_LISTEN              /var/run/php5-fpm.sock
+ENV PHP_CLEAR_ENV           no
 
 RUN \
-    #addgroup -S www-data && \
-    #adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G www-data www-data && \
-
     # Installing php
-    apk add --update tzdata && \
-    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-    echo "${TIMEZONE}" > /etc/timezone && \
-
     apk add --update \
          php5-json \
          php5-pdo \
@@ -30,7 +24,23 @@ RUN \
          php5-bcmath \
          php5-pcntl \
          php5-opcache \
-         php5-fpm && \
+         php5-fpm \
+         curl && \
+
+    apk add --virtual tobedeleted \
+        git \
+        tzdata \
+        autoconf \
+        openssl-dev \
+        g++ \
+        make \
+        alpine-sdk \
+        php5-dev \
+        php5-pear \
+        cmake && \
+
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" > /etc/timezone && \
 
     
     # Set environments

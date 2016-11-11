@@ -1,0 +1,15 @@
+version: '2'
+services:
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+    app:
+        image: dmitrovskiy/docker-nginx-php-fpm:1.0.0-alpine
+        environment:
+            - VIRTUAL_HOST=test.org
+        volumes:
+            - ./index.php:/var/www/html/web/index.php
