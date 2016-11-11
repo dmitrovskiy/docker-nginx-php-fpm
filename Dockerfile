@@ -48,6 +48,7 @@ RUN \
     sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = root|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;listen.group\s*=\s*nobody|listen.group = root|g" /etc/php5/php-fpm.conf && \
     sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = ${PHP_LISTEN}|g" /etc/php5/php-fpm.conf && \
+    sed -i "s|;*clear_env\s*=.*|clear_env = ${PHP_CLEAR_ENV}|g" /etc/php5/php-fpm.conf && \
     sed -i "s|include|;include|g" /etc/php5/php-fpm.conf && \
 
     sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php5/php.ini && \
