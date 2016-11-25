@@ -1,0 +1,60 @@
+# Docker nginx-php-fpm image
+
+Just another one nginx+php-fpm docker image except of it's flexibility.   
+Before run nginx and php-fpm processes, it alerts default nginx and fpm configurations.   
+It gives a great ability to setup nginx+php-fpm for your needs.    
+
+## Environment variables
+
+### common
+
+- `NGINX_WORKER_PROCESSES`
+- `NGINX_EVENTS_WORKER_CONNECTIONS`
+- `NGINX_EVENTS_USE`
+- `NGINX_EVENTS_MULTI_ACCEPT`
+- `NGINX_SENDFILE`
+- `NGINX_TCP_NOPUSH`
+- `NGINX_TCP_NODELAY`
+- `NGINX_SERVER_TOKENS`
+- `NGINX_TYPES_HASH_MAX_SIZE`
+
+### gzip
+
+- `NGINX_GZIP`
+- `NGINX_GZIP_STATIC`
+- `NGINX_GZIP_COMP_LEVEL`
+- `NGINX_GZIP_MIN_LENGTH`
+
+### fastcgi
+
+- `NGINX_FASTCGI_BUFFER_SIZE`
+- `NGINX_FASTCGI_BUFFERS`
+- `NGINX_FASTCGI_BUSY_BUFFERS_SIZE`
+- `NGINX_FASTCGI_TEMP_FILE_WRITE_SIZE`
+
+### fpm
+
+- `FPM_PROCESS_MAX`
+- `FPM_PM`
+- `FPM_PM_MAX_CHILDREN`
+- `FPM_PM_START_SERVERS`
+- `FPM_PM_MIN_SPARE_SERVERS`
+- `FPM_PM_MAX_SPARE_SERVERS`
+- `FPM_PM_MAX_REQUESTS`
+
+### php
+
+- `PHP_MEMORY_LIMIT`
+- `PHP_MAX_UPLOAD`
+- `PHP_MAX_FILE_UPLOAD`
+- `PHP_MAX_POST`
+
+### opcache
+
+- `PHP_OPCACHE_ENABLE`
+- `PHP_OPCACHE_ENABLE_CLI`
+- `PHP_OPCACHE_MEMORY_CONSUMPTION`
+- `PHP_OPCACHE_MAX_ACCELERATED_FILES`
+- `PHP_OPCACHE_MAX_WASTED_PERCENTAGE`
+- `PHP_OPCACHE_VALIDATE_TIMESTAMPS`
+
