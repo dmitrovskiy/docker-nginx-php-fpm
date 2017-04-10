@@ -37,6 +37,7 @@ PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-512M}
 PHP_MAX_UPLOAD=${PHP_MAX_UPLOAD:-50M}
 PHP_MAX_FILE_UPLOAD=${PHP_MAX_FILE_UPLOAD:-200}
 PHP_MAX_POST=${PHP_MAX_POST:-100M}
+PHP_UPLOAD_TMP_DIR=${PHP_UPLOAD_TMP_DIR:-/tmp}
 
 # opcache
 PHP_OPCACHE_ENABLE=${PHP_OPCACHE_ENABLE:-0}
@@ -77,6 +78,7 @@ sed -i "s|;*memory_limit\s*=\s*.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php
 sed -i "s|;*upload_max_filesize\s*=\s*.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" /etc/php5/php.ini
 sed -i "s|;*max_file_uploads\s*=\s*.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php5/php.ini
 sed -i "s|;*post_max_size\s*=\s*.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php5/php.ini
+sed -i "s|;*upload_tmp_dir\s*=\s*.*|upload_tmp_dir = ${PHP_UPLOAD_TMP_DIR}|i" /etc/php5/php.ini
 
 sed -i "s|;*opcache\.enable\s*=\s*.*|opcache\.enable = ${PHP_OPCACHE_ENABLE}|i" /etc/php5/php.ini
 sed -i "s|;*opcache\.enable_cli\s*=\s*.*|opcache\.enable_cli = ${PHP_OPCACHE_ENABLE_CLI}|i" /etc/php5/php.ini
